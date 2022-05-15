@@ -11,18 +11,15 @@ func main() {
 	router := gin.Default()
 
 	// Read HTML Templates
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob("templates/**/*.html")
+
+	// Load in static path
+	router.Static("/static", "static/")
 
 	// Add Routes
 	routes.HomeRoutes(router)
 	// Bind /api
 	routes.ApiRoutes(router.Group("/api"))
-
-	router.GET("/index", func(c *gin.Context) {
-		c.HTML(200, "index.html", gin.H{
-			"title": "Main website",
-		})
-	})
 
 	router.Run(":8080")
 
