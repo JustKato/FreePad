@@ -3,6 +3,7 @@ package post
 import (
 	"errors"
 
+	"github.com/JustKato/FreePad/helper"
 	"github.com/JustKato/FreePad/models/database"
 )
 
@@ -12,6 +13,23 @@ var postMap map[string]Post = make(map[string]Post)
 
 func GetPostList() []*Post {
 	return postList
+}
+
+func Retrieve(name string) (*Post, error) {
+
+	if len(name) < 1 {
+		return nil, errors.New("the name of the post must contain at least 1 character")
+	}
+
+	if len(name) > 256 {
+		return nil, errors.New("the name of the post must not exceed 256 characters")
+	}
+
+	// Check if we have the post cached
+	if val, ok := postMap[name]; ok {
+		return &val, nil
+	}
+
 }
 
 func Create(name string, content string) (*Post, error) {
@@ -34,8 +52,11 @@ func Create(name string, content string) (*Post, error) {
 		Content: content,
 	}
 
-	// Set the post by name
-	postMap[name] = myPost
+	// Check if we can cache this element
+	if len(postMap) < helper.GetCacheMapLimit() {
+		// Set the post by name
+		postMap[name] = myPost
+	}
 
 	// Add the post to the database
 	db, err := database.GetConn()
