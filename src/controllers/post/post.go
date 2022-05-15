@@ -1,12 +1,21 @@
 package post
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/JustKato/FreePad/models/database"
+)
 
 var postList []*Post = []*Post{}
 
 var postMap map[string]Post = make(map[string]Post)
 
 func GetPostList() []*Post {
+
+	db := database.GetConn()
+
+	println(db)
+
 	return postList
 }
 
