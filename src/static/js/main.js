@@ -37,8 +37,19 @@ function updatePost(postName) {
                 body: formData,
             })
             .then( result => {
+
+                if ( result.status < 200 || result.status > 299 ) {
+                    if ( result.status == 429) {
+                        setStatus(`Too many requests, please wait`, `has-text-danger`);
+                    } else {
+                        setStatus(`Failed to Save`, `has-text-danger`);
+                    }
+                } else {
+                    setStatus(`Saved`, `has-text-success`);
+                }
+
                 console.log(result);
-                setStatus(`Saved`, `has-text-success`);
+
             })
             .catch( error => {
                 console.error(error);

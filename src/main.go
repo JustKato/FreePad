@@ -21,6 +21,8 @@ func main() {
 	// Bind /api
 	routes.ApiRoutes(router.Group("/api"))
 
+	// TODO: Sockets: https://gist.github.com/supanadit/f6de65fc5896e8bb0c4656e451387d0f
+
 	router.Run(":8080")
 
 }

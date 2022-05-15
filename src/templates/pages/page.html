@@ -11,12 +11,18 @@
         <div class="content">
             <div class="block">
                 <a href="/" class="button is-light">Back Home</a>
-                <a href="javascript:doSavePost()" class="button is-primary">Save</a>
+                <a href="javascript:updateSelf()" class="button is-primary">Save</a>
                 <p class="mt-3">Status: <code class="has-text-primary" id="status-indicator">Loaded</code></p>
             </div>
-            <textarea class="input" name="post_content" id="post_content" onchange="updatePost({{.title}})">{{.post_content}}</textarea>
+            <textarea class="input" name="post_content" id="post_content" onchange="updateSelf()">{{.post_content}}</textarea>
         </div>
     </div>
+
+    <script>
+        function updateSelf() {
+            updatePost({{.title}})
+        }
+    </script>
 
     {{ template "inc/footer.html" .}}
 </body>

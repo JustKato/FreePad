@@ -12,6 +12,9 @@ import (
 
 func ApiRoutes(route *gin.RouterGroup) {
 
+	// Bind the rate limiter
+	helper.BindRateLimiter(route)
+
 	route.POST("/post", func(ctx *gin.Context) {
 		// Get the name of the post
 		postName := ctx.PostForm("name")
