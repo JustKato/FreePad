@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+
+  freepad:
+    build: .
+    networks:
+      - backend
+    environment:
+      - MYSQL_URL
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_PORT
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.2
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    restart: unless-stopped
+    networks:
+      - backend
+    volumes:
+     - ./dev/mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+networks:
+  backend:
+    driver: bridge
