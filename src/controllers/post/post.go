@@ -11,11 +11,6 @@ var postList []*Post = []*Post{}
 var postMap map[string]Post = make(map[string]Post)
 
 func GetPostList() []*Post {
-
-	db := database.GetConn()
-
-	println(db)
-
 	return postList
 }
 
@@ -43,6 +38,23 @@ func Create(name string, content string) (*Post, error) {
 	postMap[name] = myPost
 
 	// Add the post to the database
+	db, err := database.GetConn()
+	if err != nil {
+		return nil, err
+	}
+
+	defer db.Close()
+
+	sql := `REPLACE INTO freepad.t_posts (name, content) VALUES (?, ?)`
+	s, err := db.Prepare(sql)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s.Exec(myPost.Name, myPost.Content)
+	if err != nil {
+		return nil, err
+	}
 
 	// Return the post
 	return &myPost, nil

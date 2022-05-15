@@ -9,7 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetConn() *sql.DB {
+func GetConn() (*sql.DB, error) {
 
 	user := os.Getenv("MYSQL_USER")
 	password := os.Getenv("MYSQL_PASSWORD")
@@ -18,7 +18,7 @@ func GetConn() *sql.DB {
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@/%s", user, password, dbname))
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	// Set options
@@ -26,5 +26,5 @@ func GetConn() *sql.DB {
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 
-	return db
+	return db, nil
 }

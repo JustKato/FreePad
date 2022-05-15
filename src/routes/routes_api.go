@@ -1,7 +1,11 @@
 package routes
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/JustKato/FreePad/controllers/post"
+	"github.com/JustKato/FreePad/helper"
 	"github.com/JustKato/FreePad/types"
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +34,11 @@ func ApiRoutes(route *gin.RouterGroup) {
 			})
 		}
 
-		ctx.JSON(200, myPost)
+		ctx.JSON(200, gin.H{
+			"message": "Post succesfully created",
+			"post":    myPost,
+			"link":    fmt.Sprintf("%s/%s", helper.GetDomainBase(), url.QueryEscape(myPost.Name)),
+		})
 
 	})
 
