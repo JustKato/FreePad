@@ -12,13 +12,6 @@ import (
 
 func ApiRoutes(route *gin.RouterGroup) {
 
-	// Add in
-	route.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "Ok!",
-		})
-	})
-
 	route.POST("/post", func(ctx *gin.Context) {
 		// Get the name of the post
 		postName := ctx.PostForm("name")
@@ -42,9 +35,33 @@ func ApiRoutes(route *gin.RouterGroup) {
 
 	})
 
+	route.GET("/post", func(ctx *gin.Context) {
+		// Get the name of the post
+		postName := ctx.PostForm("name")
+
+		myPost, err := post.Retrieve(postName)
+		if err != nil {
+			ctx.JSON(400, types.FreeError{
+				Error:   err.Error(),
+				Message: "There has been an error processing your request",
+			})
+		}
+
+		// Return the post list
+		ctx.JSON(200, myPost)
+	})
+
 	route.GET("/posts", func(ctx *gin.Context) {
 		// Return the post list
 		ctx.JSON(200, post.GetPostList())
 	})
 
+	// Add in health checks
+	route.GET("/health", healthCheck)
+}
+
+func healthCheck(ctx *gin.Context) {
+	ctx.JSON(200, gin.H{
+		"message": "Healthy",
+	})
 }

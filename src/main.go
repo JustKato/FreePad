@@ -14,10 +14,15 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 
 	// Add Routes
-	// Bind health checks
-	routes.HealthRoutes(router)
+	routes.HomeRoutes(router)
 	// Bind /api
 	routes.ApiRoutes(router.Group("/api"))
+
+	router.GET("/index", func(c *gin.Context) {
+		c.HTML(200, "index.html", gin.H{
+			"title": "Main website",
+		})
+	})
 
 	router.Run(":8080")
 

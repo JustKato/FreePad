@@ -30,6 +30,42 @@ func Retrieve(name string) (*Post, error) {
 		return &val, nil
 	}
 
+	// Add the post to the database
+	db, err := database.GetConn()
+	if err != nil {
+		return nil, err
+	}
+
+	defer db.Close()
+
+	sql := `SELECT p.name, p.content FROM freepad.t_posts p WHERE p.name = ? LIMIT 1;`
+	s, err := db.Prepare(sql)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := s.Query(name)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	anyLeft := rows.Next()
+	if !anyLeft {
+		return nil, errors.New("could not find the requested post")
+	}
+
+	foundPost := Post{
+		Name:    "",
+		Content: "",
+	}
+
+	err = rows.Scan(&foundPost.Name, &foundPost.Content)
+	if err != nil {
+		return nil, err
+	}
+
+	return &foundPost, nil
 }
 
 func Create(name string, content string) (*Post, error) {
