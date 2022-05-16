@@ -13,9 +13,10 @@ func GetConn() (*sql.DB, error) {
 
 	user := os.Getenv("MYSQL_USER")
 	password := os.Getenv("MYSQL_PASSWORD")
+	dburl := os.Getenv("MYSQL_URL")
 	dbname := os.Getenv("MYSQL_DATABASE")
 
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@/%s", user, password, dbname))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", user, password, dburl, dbname))
 
 	if err != nil {
 		return nil, err
