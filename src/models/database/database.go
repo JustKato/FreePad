@@ -38,14 +38,18 @@ func getDbType() string {
 }
 
 func GetConn() (*sql.DB, error) {
-	// Check what kind of database we are looking for
-	dbConnType := getDbType()
 
-	if dbConnType == `mysql` {
-		return GetMysqlConn()
-	} else {
-		return GetLiteConn()
-	}
+	// TODO: Implement sqlite properly.
+	return GetMysqlConn()
+
+	// Check what kind of database we are looking for
+	// dbConnType := getDbType()
+
+	// if dbConnType == `mysql` {
+	// 	return GetMysqlConn()
+	// } else {
+	// 	return GetLiteConn()
+	// }
 
 }
 
@@ -59,6 +63,7 @@ func GetLiteConn() (*sql.DB, error) {
 
 	db, err := sql.Open("sqlite3", dbFile)
 	if err != nil {
+		println("Error", err)
 		return nil, err
 	}
 

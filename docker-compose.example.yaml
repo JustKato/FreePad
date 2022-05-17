@@ -15,6 +15,7 @@ services:
     depends_on:
       - mariadb
 
+  # Mariadb is completely optional, you can simply just use sqlite.
   mariadb:
     image: mariadb:10.2
     environment:

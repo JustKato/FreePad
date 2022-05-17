@@ -25,10 +25,12 @@ func ApiRoutes(route *gin.RouterGroup) {
 		// Create my post
 		myPost, err := post.Create(postName, postContent)
 		if err != nil {
+			fmt.Println("Error", err)
 			ctx.JSON(400, types.FreeError{
 				Error:   err.Error(),
 				Message: "There has been an error processing your request",
 			})
+			return
 		}
 
 		ctx.JSON(200, gin.H{
@@ -45,10 +47,12 @@ func ApiRoutes(route *gin.RouterGroup) {
 
 		myPost, err := post.Retrieve(postName)
 		if err != nil {
+			fmt.Println("Error", err)
 			ctx.JSON(400, types.FreeError{
 				Error:   err.Error(),
 				Message: "There has been an error processing your request",
 			})
+			return
 		}
 
 		// Return the post list

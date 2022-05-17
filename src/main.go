@@ -7,6 +7,8 @@ import (
 
 func main() {
 
+	gin.SetMode(gin.ReleaseMode)
+
 	// Initialize the router
 	router := gin.Default()
 

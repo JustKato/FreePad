@@ -33,6 +33,7 @@ func Retrieve(name string) (*Post, error) {
 	// Add the post to the database
 	db, err := database.GetConn()
 	if err != nil {
+		println("Erorr", err)
 		return nil, err
 	}
 
