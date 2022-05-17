@@ -2,6 +2,12 @@
 
 Quickly create "pads" and share with others
 
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/justkato/freepad)
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/justkato)
+![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)
+
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
+
 # **FreePad**
 **FreePad** is a simple `Go` project to help you juggle temporary notes that you might wanna pass from one device to another, or from a person to another with memorable and easy to communicate online "Pads".
 
