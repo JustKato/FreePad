@@ -4,3 +4,4 @@ dev/*
 docker-compose.yaml
 # Ignore the database file
 dist/main.db
+dist/freepad

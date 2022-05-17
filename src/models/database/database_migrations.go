@@ -5,9 +5,28 @@ import (
 
 	"github.com/golang-migrate/migrate/v4"
 
-	_ "github.com/golang-migrate/migrate/v4/database/sqlite"
+	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
+
+func MigrateMysql() error {
+
+	m, err := migrate.New(
+		"file://db/migrations/",
+		GetMysqlString(),
+	)
+	if err != nil {
+		return err
+	}
+
+	// Migrate
+	err = m.Up()
+	if err != nil {
+		return err
+	}
+
+	return m.Run()
+}
 
 // Run migrations to ensure tables exist
 func MigrationUpdate() *migrate.Logger {

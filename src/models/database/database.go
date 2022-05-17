@@ -70,6 +70,16 @@ func GetLiteConn() (*sql.DB, error) {
 	return db, nil
 }
 
+func GetMysqlString() string {
+
+	user := os.Getenv("MYSQL_USER")
+	password := os.Getenv("MYSQL_PASSWORD")
+	dburl := os.Getenv("MYSQL_URL")
+	dbname := os.Getenv("MYSQL_DATABASE")
+
+	return fmt.Sprintf("mysql://%s:%s@tcp(%s:3306)/%s", user, password, dburl, dbname)
+}
+
 func GetMysqlConn() (*sql.DB, error) {
 
 	user := os.Getenv("MYSQL_USER")
