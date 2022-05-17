@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/JustKato/FreePad/models/database"
@@ -32,7 +33,12 @@ func main() {
 	// TODO: Sockets: https://gist.github.com/supanadit/f6de65fc5896e8bb0c4656e451387d0f
 
 	// Try and run migrations
-	database.MigrateMysql()
+	err := database.MigrateMysql()
+	if err != nil {
+		fmt.Println("Error")
+		fmt.Println(err)
+		fmt.Println("Error")
+	}
 
 	router.Run(":8080")
 
