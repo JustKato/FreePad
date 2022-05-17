@@ -1,9 +1,16 @@
 {{ template "inc/header.html" .}}
 
+<style>
+    .qrImage[src=""] {
+        display: none;
+    }
+</style>
+
 <body>
 
     <div class="container is-fullhd p-4 mb-6" style="min-height: 35rem; height: calc(100vh - 18rem)">
         <h1 class="title">FreePad</h1>
+        <img class="qrImage" src="" alt="" style="position: fixed;top: 1rem;left: 1rem;max-width: 13vw;">
         <h2 class="subtitle">Reading from <code>{{.domain_base}}/{{.title}}</code></h2>
 
         <hr>
@@ -11,7 +18,8 @@
         <div class="content">
             <div class="block">
                 <a href="/" class="button is-light">Back Home</a>
-                <a href="javascript:updateSelf()" class="button is-primary">Save</a>
+                <a href="javascript:fetchMyQr()" class="button is-primary">QR</a>
+                <a href="javascript:updateSelf()" class="button is-success">Save</a>
                 <p class="mt-3">Status: <code class="has-text-primary" id="status-indicator">Loaded</code></p>
             </div>
             <textarea class="input" name="post_content" id="post_content" onchange="updateSelf()">{{.post_content}}</textarea>
@@ -19,6 +27,23 @@
     </div>
 
     <script>
+
+        async function fetchMyQr() {
+            let qrCode = await getQr(window.location.href)
+            .catch( err => {
+                console.error(err);
+            })
+            console.log(qrCode);
+            if ( !!qrCode.qr ) {
+                document.querySelectorAll(`.qrImage`).forEach( img => {
+                    console.log(img);
+                    console.log(qrCode.qr);
+                    img.src = qrCode.qr;
+                })
+            }
+
+        }
+
         function updateSelf() {
             updatePost({{.title}})
         }
@@ -26,3 +51,5 @@
 
     {{ template "inc/footer.html" .}}
 </body>
+
+<script src="https://raw.githubusercontent.com/scotch-io/javascript-modal/master/Modal.js"></script>

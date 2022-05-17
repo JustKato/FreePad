@@ -10,7 +10,6 @@ MYDIR=`pwd`;
 cd src;
 # Build
 echo "Building..."
-export RELEASE_MODE=1;
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ../dist/freepad .
+GIN_MODE=release CGO_ENABLED=0 GOOS=linux GIN_MODE=release go build -a -installsuffix cgo -o ../dist/freepad .
 # Go back!
 cd $MYDIR;

@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net/url"
 
@@ -8,6 +9,7 @@ import (
 	"github.com/JustKato/FreePad/helper"
 	"github.com/JustKato/FreePad/types"
 	"github.com/gin-gonic/gin"
+	"github.com/skip2/go-qrcode"
 )
 
 func ApiRoutes(route *gin.RouterGroup) {
@@ -65,6 +67,31 @@ func ApiRoutes(route *gin.RouterGroup) {
 
 	// Add in health checks
 	route.GET("/health", healthCheck)
+
+	route.POST("/qr", func(ctx *gin.Context) {
+
+		// Get the name of the post
+		link := ctx.PostForm("link")
+
+		// store the png somewhere
+		var png []byte
+
+		// Encode the link into a qr code
+		png, err := qrcode.Encode(link, qrcode.High, 512)
+		if err != nil {
+			ctx.JSON(200, types.FreeError{
+				Error:   fmt.Sprint(err),
+				Message: "Failed to convert qr Code",
+			})
+			return
+		}
+
+		// Write the png to the response
+		ctx.JSON(200, gin.H{
+			"message": "Succesfully generated the QR",
+			"qr":      "data:image/jpeg;base64," + base64.StdEncoding.EncodeToString(png),
+		})
+	})
 
 }
 

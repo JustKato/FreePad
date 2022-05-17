@@ -10,8 +10,8 @@ import (
 
 func main() {
 
-	_, isRelease := os.LookupEnv("RELEASE_MODE")
-	if isRelease {
+	_, isDevelopment := os.LookupEnv("IS_DEV")
+	if isDevelopment {
 		gin.SetMode(gin.ReleaseMode)
 	}
 

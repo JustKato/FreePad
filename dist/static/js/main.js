@@ -80,3 +80,27 @@ function goToPost() {
         }
     }
 }
+
+function getQr(link = `https://justkato.me/`) {
+    return new Promise((_r, _e) => {
+        let formData = new FormData();
+        formData.append('link', link);
+        
+        // Send out a fetch request
+        fetch("/api/qr", {
+            method: "post",
+            body: formData,
+        })
+        .then( result => {
+            result.json()
+            .then( rez => {
+                return _r(rez);
+            })
+        })
+        .catch( error => {
+            console.error(error);
+            alert(error);
+            return _e(error);
+        })
+    })
+}

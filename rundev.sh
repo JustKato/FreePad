@@ -3,8 +3,9 @@
 echo "Removing old";
 rm dist/freepad;
 
+source ../.env
 # Yeah, this is my solution
-export DOMAIN_BASE CACHE_MAP_LIMIT API_BAN_LIMIT DATABASE_DRIVER MYSQL_ROOT_PASSWORD MYSQL_DATABASE MYSQL_USER MYSQL_PASSWORD MYSQL_URL MYSQL_PORT
+export DOMAIN_BASE CACHE_MAP_LIMIT API_BAN_LIMIT DATABASE_DRIVER MYSQL_ROOT_PASSWORD MYSQL_DATABASE MYSQL_USER MYSQL_PASSWORD MYSQL_URL MYSQL_PORT IS_DEV
 
 # Remember current path
 MYDIR=`pwd`;
@@ -12,14 +13,11 @@ MYDIR=`pwd`;
 cd src;
 # Build
 echo "Building..."
-unset RELEASE_MODE;
+
 go build -o ../dist/freepad .
 # Go back!
 cd $MYDIR;
 
-MYPATH=`pwd`;
-
 cd dist
 
-source ../.env
-./freepad && cd $MYPATH;
+./freepad && cd $MYDIR;
