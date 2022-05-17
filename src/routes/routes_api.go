@@ -6,6 +6,7 @@ import (
 
 	"github.com/JustKato/FreePad/controllers/post"
 	"github.com/JustKato/FreePad/helper"
+	"github.com/JustKato/FreePad/models/database"
 	"github.com/JustKato/FreePad/types"
 	"github.com/gin-gonic/gin"
 )
@@ -61,6 +62,10 @@ func ApiRoutes(route *gin.RouterGroup) {
 
 	// Add in health checks
 	route.GET("/health", healthCheck)
+
+	route.POST("/test", func(ctx *gin.Context) {
+		ctx.JSON(200, database.MigrationUpdate())
+	})
 }
 
 func healthCheck(ctx *gin.Context) {

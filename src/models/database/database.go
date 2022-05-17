@@ -9,7 +9,63 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// Declare the default database driver
+const defaultDatabaseDriver string = "sqlite"
+
+// Declare the valid database drivers
+var validDatabaseDrivers []string = []string{"sqlite", "mysql"}
+
+// Get the database type to use
+func getDbType() string {
+	// Grab the environment variable
+	db, test := os.LookupEnv(`DATABASE_DRIVER`)
+
+	// Check if the test has failed
+	if !test {
+		return defaultDatabaseDriver
+	}
+
+	for _, v := range validDatabaseDrivers {
+		// Check if the provided database corresponds to this entry
+		if v == db {
+			// This is a valid database type
+			return db
+		}
+	}
+
+	// No matches
+	return defaultDatabaseDriver
+}
+
 func GetConn() (*sql.DB, error) {
+	// Check what kind of database we are looking for
+	dbConnType := getDbType()
+
+	if dbConnType == `mysql` {
+		return GetMysqlConn()
+	} else {
+		return GetLiteConn()
+	}
+
+}
+
+func GetSqliteDatabasePath() string {
+	return "main.db"
+}
+
+func GetLiteConn() (*sql.DB, error) {
+	// Declare the database file name
+	dbFile := GetSqliteDatabasePath()
+
+	db, err := sql.Open("sqlite3", dbFile)
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
+
+func GetMysqlConn() (*sql.DB, error) {
 
 	user := os.Getenv("MYSQL_USER")
 	password := os.Getenv("MYSQL_PASSWORD")

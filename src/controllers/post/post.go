@@ -89,10 +89,13 @@ func Create(name string, content string) (*Post, error) {
 	}
 
 	// Check if we can cache this element
-	if len(postMap) < helper.GetCacheMapLimit() {
-		// Set the post by name
-		postMap[name] = myPost
+	if len(postMap) > helper.GetCacheMapLimit() {
+		// Reset Cache
+		postMap = make(map[string]Post)
 	}
+
+	// Set the post by name
+	postMap[name] = myPost
 
 	// Add the post to the database
 	db, err := database.GetConn()
