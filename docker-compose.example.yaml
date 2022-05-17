@@ -6,7 +6,8 @@ services:
     networks:
       - backend
     environment:
-      - MYSQL_URL
+      - DOMAIN_BASE=http://localhost:8888
+      - MYSQL_URL=mariadb
       - MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_USER
@@ -14,8 +15,9 @@ services:
       - MYSQL_PORT
     depends_on:
       - mariadb
+    ports:
+      - 8888:8080
 
-  # Mariadb is completely optional, you can simply just use sqlite.
   mariadb:
     image: mariadb:10.2
     environment:
