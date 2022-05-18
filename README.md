@@ -1,4 +1,4 @@
-![Gopher](./dist/static/img/twitter_header_photo_2.png)
+![Gopher](static/img/twitter_header_photo_2.png)
 
 Quickly create "pads" and share with others
 
@@ -9,17 +9,22 @@ Quickly create "pads" and share with others
 ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 # **FreePad V2**
+
 **FreePad** is a simple `Go` project to help you juggle temporary notes that you might wanna pass from one device to another, or from a person to another with memorable and easy to communicate online "Pads".
 
 The project is absolutely free to use, you can extend the code and even contribute, I am more than happy to be corrected in my horrible beginner code.
 
 The current maintainer and creator is `Kato Twofold`
 
-![Gopher](./dist/static/img/banner_prerequisites.png)
+## Why version 2?
+
+Version 2 has been initialized to rewrite everything and applying what I have learned from v1, I am new to go and I haven't followed the best of best practices and I know for a fact I can do better, so V2 has been pushed.
+
+![Gopher](static/img/banner_prerequisites.png)
 
 Before getting started there are a couple things you should configure before proceeding, such as the database storage type and a couple limits, now if you really want to you can skip these but it's better to know what you're running as to not wake up with a not-so-nice surprise.
 
-![Gopher](./dist/static/img/banner_environment.png)
+![Gopher](static/img/banner_environment.png)
 
 The `.env` file contains all of the available options and you should use it to change those said variables, these are really important to customizing and self hosting this experience for yourself.
 
@@ -27,7 +32,7 @@ If you need any help with any setting you can always open an issue over on githu
 
 If you are barely getting started with hosting your own services, or even Sys admin stuff in general or writing code my suggestion is to just copy `.env` and leave it as is until you get it running with the defaults running fine, afterwards you can play with it a little and who knows, maybe even get to learn something!
 
-![Gopher](./dist/static/img/banner_building.png)
+![Gopher](static/img/banner_building.png)
 
 
 ## From Source
