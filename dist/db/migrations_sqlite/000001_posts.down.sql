@@ -1,1 +1,0 @@
-DROP table t_posts;

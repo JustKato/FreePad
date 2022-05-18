@@ -2,7 +2,3 @@ dev/*
 !dev/.keep
 .env
 docker-compose.yaml
-# Ignore the database file
-dist/main.db
-dist/freepad
-dist/freepad
