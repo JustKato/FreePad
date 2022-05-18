@@ -1,42 +1,5 @@
 {{ template "inc/header.html" .}}
 
 <body>
-
-    <div class="container is-fullhd p-4 mb-6" style="min-height: 50rem; height: calc(100vh - 18rem)">
-        <h1 class="title">FreePad</h1>
-        <h2 class="subtitle">Free and Open source internet notepad</h2>
-        
-        <hr class="mb-6">
-
-        <div class="content">
-            <form class="columns px-4 mt-6" onsubmit="goToPost(); return false;">
-                <span   class="mt-2 is-size-4" style="font-family: monospace">{{.domain_base}}/</span>
-                <input  class="mt-2 input mr-4" type="text" name="postName" id="postName" style="font-family: monospace" placeholder="Something memorable">
-                <button class="mt-2 button" type="submit">Open</button>
-            </form>
-        </div>
-
-        <div class="content my-4">
-            <h3>Why FreePad</h3>
-            <p>Why should you use FreePad and not some other provider?</p>
-            <ol>
-                <li style="list-style-type: none;">Keep it simple 😎</li>
-                <li style="list-style-type: none;">Don't worry about passwords 📔</li>
-                <li style="list-style-type: none;">You can be a mess, it's all temporary 🗑</li>
-                <li style="list-style-type: none;">Quick and Clean 🧼</li>
-            </ol>
-        </div>
-
-        <div class="content my-6">
-            <h3>Some Rules</h3>
-            <p>FreePad has an API and you can use it to interact with it, although there are some limitations.</p>
-            <ol>
-                <li>You are going to be rate-limited if you spam too much and put on a cooldown</li>
-                <li>There's only so many pages that can be stored before affecting performance</li>
-                <li>Automatic Shadowbanning</li>
-            </ol>
-        </div>
-    </div>
-
     {{ template "inc/footer.html" .}}
 </body>
