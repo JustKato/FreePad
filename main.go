@@ -15,6 +15,12 @@ func main() {
 	// Initialize the router
 	router := gin.Default()
 
+	// Read HTML Templates
+	router.LoadHTMLGlob("templates/**/*.html")
+
+	// Load in static path
+	router.Static("/static", "static/")
+
 	router.Run(":8080")
 
 }
