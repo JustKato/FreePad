@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/JustKato/FreePad/lib/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +21,9 @@ func main() {
 
 	// Load in static path
 	router.Static("/static", "static/")
+
+	// Add Routes
+	routes.HomeRoutes(router)
 
 	router.Run(":8080")
 
