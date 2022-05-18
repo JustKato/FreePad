@@ -7,6 +7,7 @@ import (
 
 	"github.com/JustKato/FreePad/controllers/post"
 	"github.com/JustKato/FreePad/helper"
+	"github.com/JustKato/FreePad/models/database"
 	"github.com/JustKato/FreePad/types"
 	"github.com/gin-gonic/gin"
 	"github.com/skip2/go-qrcode"
@@ -22,6 +23,14 @@ func ApiRoutes(route *gin.RouterGroup) {
 		postName := ctx.PostForm("name")
 		// Get the content of the post
 		postContent := ctx.PostForm("content")
+
+		// Try and run migrations
+		err := database.MigrateMysql()
+		if err != nil {
+			fmt.Println("Error")
+			fmt.Println(err)
+			fmt.Println("Error")
+		}
 
 		// Create my post
 		myPost, err := post.Create(postName, postContent)
