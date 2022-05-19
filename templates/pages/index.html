@@ -9,13 +9,13 @@
     <main id="main-card" class="container rounded mt-5 shadow-sm">
         <div class="p-3">
 
-            <div class="logo-container w-100 d-flex mb-4">
+            <a href="/" class="logo-container w-100 d-flex mb-4">
                 <img src="/static/img/logo_transparent.png" alt="Logo" style="max-width: 50%; margin: 0 auto;" class="mx-auto">
-            </div>
+            </a>
 
             <div class="form-group my-4">
                 <form class="search-action input-group" onsubmit="goToPad(); return false;">
-                    <input type="text" class="form-control form-control-lg" placeholder="What's your pad?" aria-label="What's your pad?" aria-describedby="pad-name-button" id="pad-name">
+                    <input autocomplete="off" type="text" class="form-control form-control-lg" placeholder="What's your pad?" aria-label="What's your pad?" aria-describedby="pad-name-button" id="pad-name">
 
                     <button class="btn btn-primary" type="submit" id="pad-name-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
