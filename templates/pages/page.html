@@ -17,11 +17,21 @@
 
         </div>
 
-        <textarea name="pad-content" id="pad-content"
-            class="form-control">{{.post_content}}</textarea>
+        <textarea name="pad-content" id="pad-content" onchange="sendMyData(this)" onkeydown="updateStatus(`Not Saved`, `text-danger`)" class="form-control">{{.post_content}}</textarea>
 
         <div id="pad-status" class="my-4 row">
-            <div class="col-md-12 col-lg-6 col-xl-6" title="Current Viewers">
+            <div class="col-md-12 col-lg-4 col-xl-4" title="Status">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reception-3" viewBox="0 0 16 16">
+                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </span>
+                    <input type="text" class="form-control" readonly value="Loaded" id="loading_status">
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-4 col-xl-4 mt-4 mt-lg-0 mt-xl-0" title="Current Viewers">
                 <div class="input-group">
                     <span class="input-group-text">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"> 
@@ -33,14 +43,14 @@
                 </div>
             </div>
 
-            <div class="col-md-12 col-lg-6 col-xl-6 mt-4 mt-lg-0 mt-xl-0" title="Last Modified">
+            <div class="col-md-12 col-lg-4 col-xl-4 mt-4 mt-lg-0 mt-xl-0" title="Last Modified">
                 <div class="input-group">
                     <span class="input-group-text">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
                             <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
                         </svg>
                     </span>
-                    <input type="text" class="form-control" readonly value="Never Before">
+                    <input type="text" class="form-control" id="last_modified_" readonly value="{{.last_modified}}">
                 </div>
             </div>
 
@@ -59,5 +69,59 @@
 
     {{ template "inc/theme-toggle.html" .}}
 </body>
+
+<script>
+    function sendMyData(el) {
+        const formData = new FormData();
+
+        el.setAttribute(`readonly`, `1`);
+
+        formData.set("content", el.value);
+
+        updateStatus(`Attempting to save...`, `text-warning`);
+
+        fetch(window.location.href.toString(), {
+            body: formData,
+            method: "post",
+        })
+        .then( resp => {
+            console.log(resp);
+            resp.json()
+            .then( e => {
+                console.log(e.pad);
+
+                document.getElementById(`last_modified_`).value = e.pad.last_modified;
+                updateStatus(`Succesfully Saved`, `text-success`);
+            })
+            .catch( err => {
+                console.error(err);
+                updateStatus(`Failed to Save`, `text-error`);
+            })
+        })
+        .catch( err => {
+            console.error(err);
+            updateStatus(`Failed to Save`, `text-error`);
+        })
+        .finally( () => {
+            el.removeAttribute(`readonly`);
+        })
+    }
+
+    function updateStatus(txt, cls) {
+
+        const loading_status = document.getElementById(`loading_status`)
+
+        loading_status.value = txt;
+
+        loading_status.classList.remove("text-danger", "text-warning", "text-success", "text-white", "text-primary");
+
+        loading_status.classList.add(cls);
+    }
+
+    document.addEventListener(`DOMContentLoaded`, e => {
+        document.getElementById(`pad-content`).focus();
+    })
+
+</script>
 
 {{ template "inc/footer.html" .}}

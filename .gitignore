@@ -2,4 +2,4 @@ dev/*
 !dev/.keep
 .env
 docker-compose.yaml
-data/Hello World
+data

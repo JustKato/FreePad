@@ -13,8 +13,8 @@ func main() {
 	// Load environment variables, ignore if any errors come up
 	godotenv.Load()
 
-	_, isDevelopment := os.LookupEnv("DEV_MODE")
-	if isDevelopment {
+	dm, isDevelopment := os.LookupEnv("DEV_MODE")
+	if !isDevelopment && dm == "0" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
