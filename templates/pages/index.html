@@ -1,0 +1,64 @@
+{{ template "inc/header.html" .}}
+
+<style>
+
+</style>
+
+<body>
+
+    <main id="main-card" class="container rounded mt-5 shadow-sm">
+        <div class="p-3">
+
+            <div class="logo-container w-100 d-flex mb-4">
+                <img src="/static/img/logo_transparent.png" alt="Logo" style="max-width: 50%; margin: 0 auto;" class="mx-auto">
+            </div>
+
+            <div class="form-group my-4">
+                <form class="search-action input-group" onsubmit="goToPad(); return false;">
+                    <input type="text" class="form-control form-control-lg" placeholder="What's your pad?" aria-label="What's your pad?" aria-describedby="pad-name-button" id="pad-name">
+
+                    <button class="btn btn-primary" type="submit" id="pad-name-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
+                            <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                        </svg>
+                    </button>
+
+                </form>
+            </div>
+
+            <script>
+                function goToPad() {
+                    // Go to the next apd
+                    window.location.href = "/" + document.getElementById(`pad-name`).value;
+                }
+            </script>
+
+            <div class="why mb-4">
+                <p>
+                    Ever wanted to transport information across platforms
+                    without the hassle of loading times, sending files, logins, etc?
+                </p>
+                <p>
+                    <b>FreePad</b> can easily store text information in any predefined url,
+                    just write it in the box above and get to the right page, write anything in
+                    and access the same address on any other device to get your info!
+                </p>
+            </div>
+        </div>
+
+        <footer class="text-muted py-5 border-top text-center">
+            <p class="mb-1">
+                FreePad by <a href="https://justkato.me/">©Kato Twofold</a>
+            </p>
+            <p class="mb-0">
+                FreePad is freely available over on our <a href="https://github.com/JustKato/FreePad">GitHub</a>
+            </p>
+        </footer>
+
+    </main>
+
+    {{ template "inc/theme-toggle.html" .}}
+</body>
+
+{{ template "inc/footer.html" .}}
