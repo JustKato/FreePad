@@ -3,19 +3,23 @@ package main
 import (
 	"os"
 
-	"github.com/JustKato/FreePad/lib/controllers"
 	"github.com/JustKato/FreePad/lib/routes"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	// Load environment variables, ignore if any errors come up
+	godotenv.Load()
+
 	_, isDevelopment := os.LookupEnv("DEV_MODE")
 	if isDevelopment {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	// Run the TaskManager
-	go controllers.TaskManager()
+	// go controllers.TaskManager()
 
 	// Initialize the router
 	router := gin.Default()
