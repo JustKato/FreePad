@@ -16,10 +16,6 @@ The project is absolutely free to use, you can extend the code and even contribu
 
 The current maintainer and creator is `Kato Twofold`
 
-## Why version 2?
-
-Version 2 has been initialized to rewrite everything and applying what I have learned from v1, I am new to go and I haven't followed the best of best practices and I know for a fact I can do better, so V2 has been pushed.
-
 ![Gopher](static/img/banner_prerequisites.png)
 
 Before getting started there are a couple things you should configure before proceeding, such as the database storage type and a couple limits, now if you really want to you can skip these but it's better to know what you're running as to not wake up with a not-so-nice surprise.
