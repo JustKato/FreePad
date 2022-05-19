@@ -8,13 +8,17 @@ Quickly create "pads" and share with others
 [![demo](https://img.shields.io/badge/Demo-Check%20out%20the%20functionality-orange)](https://pad.justkato.me/)
 ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
-# **FreePad V2**
+# **FreePad**
+
+![Gopher](static/img/demo.gif)
+
 
 **FreePad** is a simple `Go` project to help you juggle temporary notes that you might wanna pass from one device to another, or from a person to another with memorable and easy to communicate online "Pads".
 
 The project is absolutely free to use, you can extend the code and even contribute, I am more than happy to be corrected in my horrible beginner code.
 
 The current maintainer and creator is `Kato Twofold`
+
 
 ![Gopher](static/img/banner_prerequisites.png)
 
