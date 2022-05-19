@@ -3,6 +3,8 @@ package objects
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"time"
 )
 
 type Post struct {
@@ -93,4 +95,57 @@ func WritePost(p Post) error {
 	}
 
 	return nil
+}
+
+func CleanupPosts(age int) {
+	// Initialize the files buffer
+	var files []string
+
+	// Get the base path
+	root := getStorageDirectory()
+
+	// Scan the directory
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+
+		// Check that the file is not a dir
+		if !info.IsDir() {
+			files = append(files, path)
+		}
+
+		return nil
+	})
+
+	// Check if we had any errors
+	if err != nil {
+		fmt.Println("[Task::Cleanup]: Error", err)
+	}
+
+	// The timestamp where the file should be deleted
+	tooOldTime := time.Now()
+
+	// Go through all files and process them
+	for _, filePath := range files {
+
+		// Get last modified date
+		fileData, err := os.Stat(filePath)
+		if err == nil {
+			fileAge := fileData.ModTime()
+
+			// Check if the file is too old
+			if fileAge.Add(time.Duration(age)*time.Minute).Unix() < tooOldTime.Unix() {
+				fmt.Println("[Task::Cleanup]: Removing File", filePath)
+
+				// Remove the file
+				err = os.Remove(filePath)
+				if err != nil {
+					fmt.Println("[Task::Cleanup]: Failed to remove file", filePath)
+				}
+			}
+
+		} else {
+			fmt.Println("[Task::Cleanup]: Error", err)
+		}
+
+	}
+
 }

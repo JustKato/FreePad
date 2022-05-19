@@ -1,22 +1,36 @@
 package controllers
 
 import (
+	"fmt"
+	"os"
+	"strconv"
 	"time"
+
+	"github.com/JustKato/FreePad/lib/objects"
 )
 
 func TaskManager() {
 
-	// Run the migrations function
-	go handleMigrations()
-
-	for range time.Tick(time.Second * 5) {
-		// fmt.Printf("%s\n", time.Now().Format("02/01/2006 03:04 PM"))
+	// Get the cleanup interval
+	cleanupIntervalString, exists := os.LookupEnv("CLEANUP_MAX_AGE")
+	if !exists {
+		cleanupIntervalString = "-1"
 	}
 
-}
+	if cleanupIntervalString == "-1" {
+		// Do not cleanup
+		return
+	}
 
-func handleMigrations() {
-	time.AfterFunc(time.Second*30, func() {
-		// Run Migrations
-	})
+	// Try and parse the string as an int
+	cleanupInterval, err := strconv.Atoi(cleanupIntervalString)
+	if err != nil {
+		cleanupInterval = 1
+	}
+
+	fmt.Println("[Task::Cleanup]: Task registered")
+	for range time.Tick(time.Minute * 5) {
+		objects.CleanupPosts(cleanupInterval)
+	}
+
 }

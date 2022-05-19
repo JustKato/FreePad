@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/JustKato/FreePad/lib/controllers"
 	"github.com/JustKato/FreePad/lib/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -19,7 +20,7 @@ func main() {
 	}
 
 	// Run the TaskManager
-	// go controllers.TaskManager()
+	go controllers.TaskManager()
 
 	// Initialize the router
 	router := gin.Default()
