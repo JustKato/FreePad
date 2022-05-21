@@ -3,3 +3,5 @@ dev/*
 .env
 docker-compose.yaml
 data
+dist/*
+!dist/.keep
