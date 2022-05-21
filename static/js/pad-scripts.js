@@ -71,7 +71,7 @@ function updateStatus(txt, cls) {
 
 function getLocalArchives() {
 
-    let a = localStorage.getItem("archives");
+    let a = localStorage.getItem(`${padTitle}_archives`);
 
     // Check if we had anything in storage for the archives
     if ( a == null ) {
@@ -96,7 +96,7 @@ function storeArchives(archives) {
     if ( !Array.isArray(archives) ) return;
 
     // Set the current archives
-    localStorage.setItem('archives', JSON.stringify(archives));
+    localStorage.setItem(`${padTitle}_archives`, JSON.stringify(archives));
 }
 
 function renderArchivesSelection() {
