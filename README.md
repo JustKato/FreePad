@@ -31,3 +31,65 @@ The `.env` file contains all of the available options and you should use it to c
 If you need any help with any setting you can always open an issue over on github and get help from me.
 
 If you are barely getting started with hosting your own services, or even Sys admin stuff in general or writing code my suggestion is to just copy `.env` and leave it as is until you get it running with the defaults running fine, afterwards you can play with it a little and who knows, maybe even get to learn something!
+
+![Gopher](static/img/banner_how_to_run.png)
+
+## Docker `(Recommended)`
+```bash
+# Get into a directory to run this
+mkdir ~/freepad && cd freepad
+
+# Copy the latest .env and docker-compose.example.yaml files
+wget -O docker-compose.yaml https://raw.githubusercontent.com/JustKato/FreePad/master/docker-compose.example.yaml
+wget -O .env https://raw.githubusercontent.com/JustKato/FreePad/master/.env.example
+
+# Edit your docker-compose.yaml and change the DOMAIN_BASE environment variable
+vim docker-compose.yaml
+
+# Edit your .env file and change the variables to your liking
+vim .env
+
+# Run the container
+docker-compose up
+# Run the container in the background
+docker-compose up -d
+```
+## Distribution
+[Downloads here](https://github.com/JustKato/FreePad/releases)
+```bash
+# Get into a directory to run this
+mkdir ~/freepad && cd freepad
+
+# Get the latest distribution from https://github.com/JustKato/FreePad/releases
+wget -O release.zip https://github.com/JustKato/FreePad/releases/download/main/...
+
+# Unzip the release
+unzip release.zip
+
+# Edit the .env file
+vim ./.env
+
+# Run the program
+./freepad
+```
+
+## Building
+```bash
+# Clone th erepo
+git clone https://github.com/JustKato/FreePad.git ~/freepad
+
+# Get into the directory
+cd ~/freepad
+
+# Build using the script
+./build.sh
+
+# Copy the environment variable
+cp .env dist/
+
+# Go into the program's directory
+cd dist
+
+# Run the program
+./freepad
+```
