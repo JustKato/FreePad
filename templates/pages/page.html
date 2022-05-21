@@ -17,7 +17,7 @@
 
         </div>
 
-        <textarea name="pad-content" id="pad-content" onchange="sendMyData(this)" onkeydown="updateStatus(`Not Saved`, `text-danger`)" class="form-control">{{.post_content}}</textarea>
+        <textarea name="pad-content" id="pad-content" onchange="sendMyData(this)" onkeydown="updateStatus(`Not Saved`, `text-warning`); toggleWritingWatch(this)" class="form-control">{{.post_content}}</textarea>
 
         <div id="pad-status" class="my-4 row">
             <div class="col-md-12 col-lg-4 col-xl-4" title="Status">
@@ -74,6 +74,12 @@
     function sendMyData(el) {
         const formData = new FormData();
 
+        // Check if the writing watch was sending something already
+        if ( !!window.writingWatch ) {
+            // Clear old timeout
+            clearTimeout(window.writingWatch);
+        }
+
         el.setAttribute(`readonly`, `1`);
 
         formData.set("content", el.value);
@@ -85,26 +91,39 @@
             method: "post",
         })
         .then( resp => {
-            console.log(resp);
             resp.json()
             .then( e => {
-                console.log(e.pad);
-
                 document.getElementById(`last_modified_`).value = e.pad.last_modified;
                 updateStatus(`Succesfully Saved`, `text-success`);
             })
             .catch( err => {
-                console.error(err);
                 updateStatus(`Failed to Save`, `text-error`);
+                console.error(err);
             })
         })
         .catch( err => {
-            console.error(err);
             updateStatus(`Failed to Save`, `text-error`);
+            console.error(err);
         })
         .finally( () => {
             el.removeAttribute(`readonly`);
         })
+    }
+
+    function toggleWritingWatch(el) {
+
+        // Check if the writing watch was sending something already
+        if ( !!window.writingWatch ) {
+            // Clear old timeout
+            clearTimeout(window.writingWatch);
+        }
+
+        // Set a timeout for the action
+        window.writingWatch = setTimeout( () => {
+            // Send out the data
+            sendMyData(el)
+        }, 750)
+
     }
 
     function updateStatus(txt, cls) {
@@ -112,9 +131,7 @@
         const loading_status = document.getElementById(`loading_status`)
 
         loading_status.value = txt;
-
         loading_status.classList.remove("text-danger", "text-warning", "text-success", "text-white", "text-primary");
-
         loading_status.classList.add(cls);
     }
 
