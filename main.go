@@ -12,7 +12,7 @@ import (
 func main() {
 
 	// Load environment variables, ignore if any errors come up
-	godotenv.Load()
+	_ = godotenv.Load()
 
 	dm, isDevelopment := os.LookupEnv("DEV_MODE")
 	if !isDevelopment && dm == "0" {
