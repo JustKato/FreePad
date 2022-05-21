@@ -23,6 +23,9 @@ func HomeRoutes(router *gin.Engine) {
 		// Get the post we are looking for.
 		postName := c.Param("post")
 
+		// Get the maximum pad size, so that we may notify the client-side to match server-side
+		maximumPadSize := helper.GetMaximumPadSize()
+
 		// Sanitize the postName
 		newPostName, err := url.QueryUnescape(postName)
 		if err == nil {
@@ -33,10 +36,11 @@ func HomeRoutes(router *gin.Engine) {
 		post := objects.GetPost(postName)
 
 		c.HTML(200, "page.html", gin.H{
-			"title":         postName,
-			"post_content":  post.Content,
-			"last_modified": post.LastModified,
-			"domain_base":   helper.GetDomainBase(),
+			"title":          postName,
+			"post_content":   post.Content,
+			"maximumPadSize": maximumPadSize,
+			"last_modified":  post.LastModified,
+			"domain_base":    helper.GetDomainBase(),
 		})
 	})
 

@@ -1,10 +1,13 @@
 package objects
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/JustKato/FreePad/lib/helper"
 )
 
 type Post struct {
@@ -72,6 +75,11 @@ func GetPost(fileName string) Post {
 }
 
 func WritePost(p Post) error {
+
+	maximumPadSize := helper.GetMaximumPadSize()
+	if len(p.Content) > maximumPadSize {
+		return errors.New("The pad is too big, please limit to the maximum of " + fmt.Sprint(maximumPadSize) + " characters")
+	}
 
 	// Get the base storage directory and make sure it exists
 	storageDir := getStorageDirectory()
