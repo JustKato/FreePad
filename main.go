@@ -25,6 +25,9 @@ func main() {
 	// Initialize the router
 	router := gin.Default()
 
+	// Apply the FreePad Headers
+	controllers.ApplyHeaders(router)
+
 	// Read HTML Templates
 	router.LoadHTMLGlob("templates/**/*.html")
 
