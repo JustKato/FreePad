@@ -166,6 +166,24 @@ function saveLocalArchive() {
 
 }
 
+function generateQRCode() {
+    var qrcodeContainer = document.getElementById(`qrcode`)
+    // Remove old contents
+    qrcodeContainer.innerHTML = "";
+    // Add new qr
+    new QRCode(qrcodeContainer, {
+        text: window.location.toString(),
+        width:  256,
+        height: 256,
+        colorDark: "#555273",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Open the modal
+    MicroModal.show(`qrmodal`)
+}
+
 document.addEventListener(`DOMContentLoaded`, e => {
 
     { // Textarea Focusing
