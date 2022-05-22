@@ -16,6 +16,25 @@ func GetDomainBase() string {
 	return domainBase
 }
 
+func GetApiBanLimit() int {
+	banLimit, exists := os.LookupEnv("API_BAN_LIMIT")
+
+	if !exists {
+		os.Setenv("API_BAN_LIMIT", "300")
+		banLimit = "300"
+	}
+
+	// Try and convert the string into an integer
+	rez, err := strconv.Atoi(banLimit)
+	// Check if the conversion has failed
+	if err != nil {
+		// Simply return the default
+		return 300
+	}
+
+	return rez
+}
+
 func GetMaximumPadSize() int {
 	// Lookup if the maximum pad size variable exists.
 	maxPadSize, exists := os.LookupEnv("MAXIMUM_PAD_SIZE")

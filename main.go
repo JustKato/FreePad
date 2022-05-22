@@ -31,6 +31,9 @@ func main() {
 	// Load in static path
 	router.Static("/static", "static/")
 
+	// Implement the rate limiter
+	controllers.DoRateLimit(router)
+
 	// Add Routes
 	routes.HomeRoutes(router)
 
