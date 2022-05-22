@@ -1,3 +1,6 @@
+# 1.1.1
+The freepad version has been added as a header to the response
+
 # 1.1.0
 Implemented a rate-limiting system, quite primitive and basic implementation on my part since it's looking at all requests not just the POST requests, this can be bad news if someone is using the service a ton and won't truly protect from floods as it's ip-based but should offer a level of security better than none.
 
