@@ -28,9 +28,23 @@ func TaskManager() {
 		cleanupInterval = 1
 	}
 
-	fmt.Println("[Task::Cleanup]: Task registered")
-	for range time.Tick(time.Minute * 5) {
+	// Run all handlers
+	go cleanupHandler(cleanupInterval)
+	go savePostHandler()
+
+}
+
+func savePostHandler() {
+	// Save the views cache
+	fmt.Println("[Task::Save]: File save registered")
+	for range time.NewTicker(time.Second).C {
+		objects.SavePostViewsCache()
+	}
+}
+
+func cleanupHandler(cleanupInterval int) {
+	fmt.Println("[Task::Cleanup]: Cleanup task registered")
+	for range time.NewTicker(time.Minute * 5).C {
 		objects.CleanupPosts(cleanupInterval)
 	}
-
 }

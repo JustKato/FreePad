@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"net/http"
 	"net/url"
 	"time"
 
@@ -23,6 +24,13 @@ func HomeRoutes(router *gin.Engine) {
 		// Get the post we are looking for.
 		postName := c.Param("post")
 
+		if postName == `views_storage.json` {
+			// Redirect the user to the homepage as this is a reserved keyword
+			c.Redirect(http.StatusPermanentRedirect, "/")
+			// Do not proceed further
+			return
+		}
+
 		// Get the maximum pad size, so that we may notify the client-side to match server-side
 		maximumPadSize := helper.GetMaximumPadSize()
 
@@ -40,6 +48,7 @@ func HomeRoutes(router *gin.Engine) {
 			"post_content":   post.Content,
 			"maximumPadSize": maximumPadSize,
 			"last_modified":  post.LastModified,
+			"views":          post.Views,
 			"domain_base":    helper.GetDomainBase(),
 		})
 	})
@@ -59,6 +68,7 @@ func HomeRoutes(router *gin.Engine) {
 		p := objects.Post{
 			Name:         postName,
 			Content:      postContent,
+			Views:        0, // This can just be ignored
 			LastModified: time.Now().Format("02/01/2006 03:04:05 PM"),
 		}
 

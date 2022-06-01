@@ -1,19 +1,154 @@
 package objects
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/JustKato/FreePad/lib/helper"
 )
 
+// Initialize the views cache
+var ViewsCache map[string]uint32 = make(map[string]uint32)
+
+// Mutex lock for the ViewsCache
+var viewersLock sync.Mutex
+
 type Post struct {
 	Name         string `json:"name"`
 	LastModified string `json:"last_modified"`
 	Content      string `json:"content"`
+	Views        uint32 `json:"views"`
+}
+
+// Get the path to the views JSON
+func getViewsFilePath() (string, error) {
+	// Get the path to the storage then append the const name for the storage file
+	filePath := path.Join(getStorageDirectory(), "views_storage.json")
+
+	// Check if the file exists
+	if _, err := os.Stat(filePath); errors.Is(err, os.ErrNotExist) {
+		// Create the file
+		err := os.WriteFile(filePath, []byte(""), 0777)
+		if err != nil {
+			return ``, err
+		}
+	}
+
+	// Return the file path
+	return filePath, nil
+}
+
+// Load the views cache from file
+func LoadViewsCache() error {
+	// Get the views file path
+	viewsFilePath, err := getViewsFilePath()
+	if err != nil {
+		// This is now a problem for the upstairs
+		return err
+	}
+
+	// Read the contents of the file as a map
+	f, err := os.ReadFile(viewsFilePath)
+	if err != nil {
+		// This is now a problem for the upstairs
+		return err
+	}
+
+	// Check if the contents are valid
+	if len(f) <= 0 && len(string(f)) <= 0 {
+		// The file is completely empty!
+		return nil
+	}
+
+	var parsedData map[string]uint32
+
+	// Parse the data
+	err = json.Unmarshal(f, &parsedData)
+	if err != nil {
+		// This is now a problem for the function caller :D
+		return err
+	}
+
+	storageDir := getStorageDirectory()
+	// Loop through all of the mapped files
+	for fileName := range parsedData {
+		// Grab the path to the file
+		// TODO: Create a generic function that checks if a post exists by name to use here adn in the GetPost method.
+		filePath := path.Join(storageDir, fileName)
+		// Check if the file exists
+		if _, err := os.Stat(filePath); !os.IsNotExist(err) {
+			// Looks like the file does not exist anymore, remove it from the map
+			delete(parsedData, fileName)
+		}
+	}
+
+	// Update the current cache
+	ViewsCache = parsedData
+
+	return nil
+}
+
+func AddViewToPost(postName string) uint32 {
+	// Lock the viewers mapping
+	viewersLock.Lock()
+
+	// Check if the map has any value set to this elem
+	if _, ok := ViewsCache[postName]; !ok {
+		// Set the map value
+		ViewsCache[postName] = 0
+	}
+
+	// Add to the counter
+	ViewsCache[postName]++
+
+	// Unlock
+	viewersLock.Unlock()
+
+	// Return the value
+	return ViewsCache[postName]
+}
+
+func SavePostViewsCache() error {
+
+	data, err := json.Marshal(ViewsCache)
+	if err != nil {
+		return err
+	}
+
+	viewsFilePath, err := getViewsFilePath()
+	if err != nil {
+		return err
+	}
+
+	f, err := os.OpenFile(viewsFilePath, os.O_WRONLY|os.O_CREATE, 0777)
+	if err != nil {
+		return err
+	}
+	// Actually close the file
+	defer f.Close()
+
+	// Delete all past content
+	err = f.Truncate(0)
+	if err != nil {
+		return err
+	}
+
+	// Reset pointer
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		return err
+	}
+
+	// Write the json into storage
+	_, err = f.Write(data)
+
+	return err
 }
 
 // Get the path to the storage directory
@@ -47,9 +182,13 @@ func GetPost(fileName string) Post {
 	// Generate the file path
 	filePath := fmt.Sprintf("%s%s", storageDir, fileName)
 
+	// Get the post views and add 1 to them
+	postViews := AddViewToPost(fileName)
+
 	p := Post{
 		Name:         fileName,
 		Content:      "",
+		Views:        postViews,
 		LastModified: "Never Before",
 	}
 
@@ -94,6 +233,8 @@ func WritePost(p Post) error {
 	if err != nil {
 		return err
 	}
+	// Actually close the file
+	defer f.Close()
 
 	// Write the contnets
 	_, err = f.WriteString(p.Content)
