@@ -3,13 +3,13 @@ version: '3'
 services:
   freepad:
     # Uncomment the bellow to use the production docker image from the docker repository
-    # image: 
+    image: justkato/freepad
     # Comment the build line if you are just looking to use a docker-compose file
-    build: .
+    # build: .
     # I don't recommend changing the 8080 as there would be no reason to,
     # simply change the 3113 port to anything you would like for the container to listen on
     ports:
-      - 3113:8080
+      - 8080:8080
     # This will read from your .env variables, in that file you will find the documentation as well
     environment:
       - DOMAIN_BASE
