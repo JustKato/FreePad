@@ -1,3 +1,6 @@
+# 1.4.0 🖌
+Syntax highlight has been implemented, as well as a couple security concerns being patched. Thank you to everyone that has helped me out with those
+
 # 1.3.0 👀
 Implemented a views system, now everyone can see how many times a pad has been accessed, an auto-save has also been added for those views to file in the `data` dir.
 
