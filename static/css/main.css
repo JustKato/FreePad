@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
 :root {
     --color-border-default: #444c56;
     --color-fg-default: #adbac7;
@@ -39,11 +41,29 @@ main#main-card {
     display: none !important;
 }
 
+#pad-content, #textarea-preview {
+    tab-size: 2;
+
+    font-family: 'Roboto Mono', monospace !important;
+}
+
 #pad-content-area {
     position: relative;
 
     display: flex;
     flex-flow: column;
+}
+
+.edit-content-text {
+    display: none;
+}
+
+.read-only-content .edit-content-text {
+    display: block !important;
+}
+
+.read-only-content .view-content-text {
+    display: none !important;
 }
 
 #pad-content-toggler {
