@@ -39,7 +39,7 @@ func HomeRoutes(router *gin.Engine) {
 		if err == nil {
 			postName = newPostName
 		}
-		postName = sanitize.AlphaNumeric(postName, true)
+		postName = sanitize.XSS(sanitize.SingleLine(postName))
 
 		post := objects.GetPost(postName)
 
@@ -63,7 +63,7 @@ func HomeRoutes(router *gin.Engine) {
 		if err == nil {
 			postName = newPostName
 		}
-		postName = sanitize.AlphaNumeric(postName, true)
+		postName = sanitize.XSS(sanitize.SingleLine(postName))
 
 		p := objects.Post{
 			Name:         postName,

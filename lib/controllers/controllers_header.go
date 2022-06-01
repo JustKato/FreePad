@@ -6,7 +6,7 @@ func ApplyHeaders(router *gin.Engine) {
 
 	router.Use(func(ctx *gin.Context) {
 		// Apply the header
-		ctx.Header("FreePad-Version", "1.3.0")
+		ctx.Header("FreePad-Version", "1.4.0")
 
 		// Move on
 		ctx.Next()

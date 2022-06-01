@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL version="1.3.0"
+LABEL version="1.4.0"
 
 # Copy the distribution files
 COPY ./dist /app

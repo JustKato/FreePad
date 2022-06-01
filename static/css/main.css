@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
 :root {
     --color-border-default: #444c56;
     --color-fg-default: #adbac7;
@@ -35,6 +37,48 @@ main#main-card {
     right: .5rem;
 }
 
+.hidden {
+    display: none !important;
+}
+
+#pad-content, #textarea-preview {
+    tab-size: 2;
+
+    font-family: 'Roboto Mono', monospace !important;
+}
+
+#pad-content-area {
+    position: relative;
+
+    display: flex;
+    flex-flow: column;
+}
+
+.edit-content-text {
+    display: none;
+}
+
+.read-only-content .edit-content-text {
+    display: block !important;
+}
+
+.read-only-content .view-content-text {
+    display: none !important;
+}
+
+#pad-content-toggler {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+
+    user-select: none;
+}
+
+#textarea-preview {
+    max-height: calc(17rem + 30vh);
+    min-height: 17rem;
+    overflow: auto;
+}
 
 textarea:focus,
 input[type="text"]:focus,
@@ -56,3 +100,27 @@ input[type="color"]:focus,
   box-shadow: none;
   outline: 0 none;
 }
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3b3b3b #ffffff00;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff00;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #3b3b3b;
+    border-radius: 2px;
+    border: 1px solid #ffffff00;
+  }

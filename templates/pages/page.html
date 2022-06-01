@@ -21,6 +21,8 @@
     var padTitle = {{.title }};
 </script>
 
+<link rel="stylesheet" href="/static/vendor/hljs/theme.css">
+
 <body>
 
     <main id="main-card" class="container rounded mt-5 shadow-sm">
@@ -35,9 +37,27 @@
 
         <h2 class="mb-4">{{.title}}</h2>
 
-        <textarea maxlength="{{.maximumPadSize}}" name="pad-content" id="pad-content" onchange="sendMyData(this)"
-            onkeydown="updateStatus(`Not Saved`, `text-warning`); toggleWritingWatch(this)"
-            class="form-control">{{.post_content}}</textarea>
+        <div id="pad-content-area">
+            <div class="btn-sm btn" id="pad-content-toggler" onclick="toggleTextareaPreview()">
+                <span class="edit-content-text" title="Edit Content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                </span>
+                <span class="view-content-text" title="ReadOnly">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">
+                        <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <pre><code id="textarea-preview" class="form-control hidden">{{.post_content}}</code></pre>
+
+            <textarea maxlength="{{.maximumPadSize}}" name="pad-content" id="pad-content" onchange="sendMyData(this)"
+                onkeydown="updateStatus(`Not Saved`, `text-warning`); toggleWritingWatch(this)"
+                class="form-control hidden">{{.post_content}}</textarea>
+        </div>
+
 
         <div id="pad-status" class="my-4 row">
             <div class="col-md-12 col-lg-4 col-xl-4" title="Status">
@@ -192,10 +212,11 @@
 <script src="/static/js/fileSaver.js"></script>
 <script src="/static/js/pad.js"></script>
 <script src="/static/js/pad-scripts.js"></script>
+<script src="/static/vendor/hljs/highlight.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+<script src="/static/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="/static/vendor/qrcodejs/qrcode.min.js"></script>
+<script src="/static/vendor/micromodal/micromodal.min.js"></script>
 
 <script>
     window.pad = new Pad({{.title }}, {{.last_modified }});

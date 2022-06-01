@@ -34,7 +34,7 @@ func getViewsFilePath() (string, error) {
 	// Check if the file exists
 	if _, err := os.Stat(filePath); errors.Is(err, os.ErrNotExist) {
 		// Create the file
-		err := os.WriteFile(filePath, []byte(""), 0777)
+		err := os.WriteFile(filePath, []byte(""), 0640)
 		if err != nil {
 			return ``, err
 		}
@@ -126,7 +126,7 @@ func SavePostViewsCache() error {
 		return err
 	}
 
-	f, err := os.OpenFile(viewsFilePath, os.O_WRONLY|os.O_CREATE, 0777)
+	f, err := os.OpenFile(viewsFilePath, os.O_WRONLY|os.O_CREATE, 0640)
 	if err != nil {
 		return err
 	}
@@ -162,7 +162,7 @@ func getStorageDirectory() string {
 	// Check if the base storage path exists
 	if _, err := os.Stat(baseStoragePath); os.IsNotExist(err) {
 		// Looks like the base storage path was NOT set, create the dir
-		err = os.Mkdir(baseStoragePath, 0777)
+		err = os.Mkdir(baseStoragePath, 0640)
 		// Check for errors
 		if err != nil {
 			// No way this sends an error unless it goes horribly wrong.
@@ -233,8 +233,6 @@ func WritePost(p Post) error {
 	if err != nil {
 		return err
 	}
-	// Actually close the file
-	defer f.Close()
 
 	// Write the contnets
 	_, err = f.WriteString(p.Content)
@@ -242,11 +240,7 @@ func WritePost(p Post) error {
 		return err
 	}
 
-	if err := f.Close(); err != nil {
-		return err
-	}
-
-	return nil
+	return f.Close()
 }
 
 // Cleanup all of the older posts based on the environment settings
