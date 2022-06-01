@@ -233,8 +233,6 @@ func WritePost(p Post) error {
 	if err != nil {
 		return err
 	}
-	// Actually close the file
-	defer f.Close()
 
 	// Write the contnets
 	_, err = f.WriteString(p.Content)
@@ -242,11 +240,7 @@ func WritePost(p Post) error {
 		return err
 	}
 
-	if err := f.Close(); err != nil {
-		return err
-	}
-
-	return nil
+	return f.Close()
 }
 
 // Cleanup all of the older posts based on the environment settings
