@@ -1,25 +1,27 @@
+# Importing golang 1.18 to use as a builder for our source
 FROM golang:1.18 as builder
 
-# Go into the app dir
-WORKDIR /app
+# Use the /src directory as a workdir
+WORKDIR /src
 
-# Copy all of the source to /app
+# Copy the src to /src
 COPY . ./
 
 # Download dependencies
 RUN go mod download
 
-# Build
+# Build the executable
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o freepad .
 
-FROM alpine
+# Import alpine linux as a base
+FROM scratch
 
 LABEL version="1.4.0"
 
 # Copy the files from the builder to the new image
-COPY --from=builder /app/freepad /app/freepad
-COPY --from=builder /app/templates /app/templates
-COPY --from=builder /app/static /app/static
+COPY --from=builder /src/freepad /app/freepad
+COPY --from=builder /src/templates /app/templates
+COPY --from=builder /src/static /app/static
 
 # Make /app the work directory
 WORKDIR /app
