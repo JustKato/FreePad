@@ -1,3 +1,6 @@
+# 1.3.0 👀
+Implemented a views system, now everyone can see how many times a pad has been accessed, an auto-save has also been added for those views to file in the `data` dir.
+
 # 1.2.0 🍥
 QR Code generation has been implemented, the refresh button has been removed for the sake of keepign things simple and symmetrical. This will generate a QR code on the javascript side. 
 
