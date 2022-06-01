@@ -16,6 +16,7 @@ type Post struct {
 	Content      string `json:"content"`
 }
 
+// Get the path to the storage directory
 func getStorageDirectory() string {
 
 	baseStoragePath, exists := os.LookupEnv("PAD_STORAGE_PATH")
@@ -38,6 +39,7 @@ func getStorageDirectory() string {
 	return baseStoragePath
 }
 
+// Get a post from the file system
 func GetPost(fileName string) Post {
 	// Get the base storage directory and make sure it exists
 	storageDir := getStorageDirectory()
@@ -74,6 +76,7 @@ func GetPost(fileName string) Post {
 	return p
 }
 
+// Write a post to the file system
 func WritePost(p Post) error {
 
 	maximumPadSize := helper.GetMaximumPadSize()
@@ -105,6 +108,7 @@ func WritePost(p Post) error {
 	return nil
 }
 
+// Cleanup all of the older posts based on the environment settings
 func CleanupPosts(age int) {
 	// Initialize the files buffer
 	var files []string
@@ -155,5 +159,4 @@ func CleanupPosts(age int) {
 		}
 
 	}
-
 }
