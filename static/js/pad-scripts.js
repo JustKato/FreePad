@@ -16,6 +16,11 @@ function sendMyData(el) {
 
     el.setAttribute(`readonly`, `1`);
 
+    const textareaPreview = document.getElementById(`textarea-preview`)
+    if ( !!textareaPreview ) {
+        textareaPreview.textContent = el.value;
+    }
+
     formData.set("content", el.value);
 
     updateStatus(`Attempting to save...`, `text-warning`);
@@ -184,17 +189,54 @@ function generateQRCode() {
     MicroModal.show(`qrmodal`)
 }
 
-document.addEventListener(`DOMContentLoaded`, e => {
+function toggleTextareaPreview() {
+    setTextareaPreview( !document.getElementById(`pad-content-toggler`).classList.contains(`read-only`) )
+}
 
-    { // Textarea Focusing
-        const textarea = document.getElementById(`pad-content`);
+// t == true - Read Only
+// t == false - Edit mode
+function setTextareaPreview( t = true ) {
+    const prev     = document.getElementById(`textarea-preview`)
+    const textarea = document.getElementById(`pad-content`);
+    const toggler  = document.getElementById(`pad-content-toggler`);
 
+    const togglerEdit = toggler.querySelector(`.edit-content-text`);
+    const togglerView = toggler.querySelector(`.view-content-text`);
+
+    if ( t ) {
+        // Toggle read only
+        prev.classList.remove(`hidden`)
+        toggler.classList.add(`read-only`);
+
+        togglerEdit.classList.remove(`hidden`);
+        togglerView.classList.add(`hidden`);
+
+        textarea.classList.add(`hidden`);
+    } else {
+        // Toggle edit mode
+        prev.classList.add(`hidden`)
+        toggler.classList.remove(`read-only`);
+
+        togglerEdit.classList.add(`hidden`);
+        togglerView.classList.remove(`hidden`);
+
+
+        textarea.classList.remove(`hidden`);
         // Focus
         textarea.focus();
         // Scroll
         textarea.scrollTop = textarea.scrollHeight;
         // Move cursor
         textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    }
+
+}
+
+document.addEventListener(`DOMContentLoaded`, e => {
+
+    { // Textarea Handling
+        const textarea = document.getElementById(`pad-content`);
+        setTextareaPreview( !!textarea.value );
     }
 
     { // Archives

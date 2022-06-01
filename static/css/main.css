@@ -35,6 +35,29 @@ main#main-card {
     right: .5rem;
 }
 
+.hidden {
+    display: none !important;
+}
+
+#pad-content-area {
+    position: relative;
+
+    display: flex;
+    flex-flow: column;
+}
+
+#pad-content-toggler {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+
+    user-select: none;
+}
+
+#textarea-preview {
+    max-height: calc(20rem + 30vh);
+    overflow: auto;
+}
 
 textarea:focus,
 input[type="text"]:focus,
@@ -56,3 +79,27 @@ input[type="color"]:focus,
   box-shadow: none;
   outline: 0 none;
 }
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3b3b3b #ffffff00;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff00;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #3b3b3b;
+    border-radius: 2px;
+    border: 1px solid #ffffff00;
+  }
