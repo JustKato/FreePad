@@ -55,7 +55,8 @@ main#main-card {
 }
 
 #textarea-preview {
-    max-height: calc(20rem + 30vh);
+    max-height: calc(17rem + 30vh);
+    min-height: 17rem;
     overflow: auto;
 }
 
