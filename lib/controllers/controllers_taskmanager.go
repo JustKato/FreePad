@@ -37,7 +37,7 @@ func TaskManager() {
 func savePostHandler() {
 	// Save the views cache
 	fmt.Println("[Task::Save]: File save registered")
-	for range time.NewTicker(time.Second).C {
+	for range time.NewTicker(time.Minute * 1).C {
 		objects.SavePostViewsCache()
 	}
 }
