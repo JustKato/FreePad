@@ -72,3 +72,18 @@ func GetCacheMapLimit() int {
 
 	return rez
 }
+
+// Get the admin token used to authenticate as an admin
+func GetAdminToken() string {
+	// Get the admin login from the environment
+	adminToken, exists := os.LookupEnv("ADMIN_TOKEN")
+
+	// Check if the admin token was defined
+	if !exists {
+		// The admin token was not defined, disable admin logins
+		return ""
+	}
+
+	// Return the admin token
+	return adminToken
+}
