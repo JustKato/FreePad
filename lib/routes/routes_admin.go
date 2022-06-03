@@ -64,7 +64,18 @@ func AdminRoutes(router *gin.RouterGroup) {
 	})
 
 	router.GET("/delete/:padname", func(ctx *gin.Context) {
+		// Get the pad name that we bout' to delete
+		padName := ctx.Param("padname")
 
+		// Try and get the pad, check if valid
+		pad := objects.GetPost(padName, false)
+
+		// Delete the pad
+		err := pad.Delete()
+		fmt.Println(err)
+
+		// Redirect the user to the admin page
+		ctx.Redirect(http.StatusFound, "/admin/view")
 	})
 
 	// Admin view route
@@ -72,8 +83,6 @@ func AdminRoutes(router *gin.RouterGroup) {
 
 		// Get all of the pads as a listing
 		padList := objects.GetAllPosts()
-
-		fmt.Println(padList)
 
 		ctx.HTML(200, "admin_view.html", gin.H{
 			"title":       "Admin",

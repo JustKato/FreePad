@@ -41,7 +41,7 @@ func HomeRoutes(router *gin.Engine) {
 		}
 		postName = sanitize.XSS(sanitize.SingleLine(postName))
 
-		post := objects.GetPost(postName)
+		post := objects.GetPost(postName, true)
 
 		c.HTML(200, "page.html", gin.H{
 			"title":          postName,

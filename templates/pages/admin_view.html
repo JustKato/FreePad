@@ -37,7 +37,10 @@
                     <div class="pad-name col-5">
                         Pad Name
                     </div>
-                    <div class="pad-last-modified col-5">
+                    <div class="pad-last-view col-1">
+                        Views
+                    </div>
+                    <div class="pad-last-modified col-4">
                         Create Date
                     </div>
                     <div class="col-2">
@@ -54,11 +57,14 @@
                                     {{ $element.Name }}
                                 </a>
                             </div>
-                            <div class="pad-last-modified col-5">
+                            <div class="pad-last-view col-1">
+                                {{ $element.Views }}
+                            </div>
+                            <div class="pad-last-modified col-4">
                                 {{ $element.LastModified }}
                             </div>
                             <div class="col-2">
-                                <div onclick="doDelete(`{{ $element.Name }}`)" class="btn btn-danger">
+                                <div onclick="doDelete({{ $element.Name }})" class="btn btn-danger">
                                     Delete
                                 </div>
                             </div>
