@@ -295,3 +295,30 @@ func CleanupPosts(age int) {
 
 	}
 }
+
+func GetAllPosts() []Post {
+	// Initialize the list of posts
+	postList := []Post{}
+
+	// Get the posts storage directory
+	storageDir := getStorageDirectory()
+
+	// Read the directory listing
+	files, err := os.ReadDir(storageDir)
+	// Check if thereh as been an issues with reading the directory contents
+	if err != nil {
+		// Log the error
+		fmt.Println("Error::GetAllPosts:", err)
+		// Return an empty list to have a clean fallback
+		return []Post{}
+	}
+
+	// Go through all of the files
+	for _, v := range files {
+		// Process the file into a pad
+		postList = append(postList, GetPost(v.Name()))
+	}
+
+	// Return the post list
+	return postList
+}

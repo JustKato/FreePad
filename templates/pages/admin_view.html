@@ -1,0 +1,78 @@
+{{ template "inc/header.html" .}}
+
+<style>
+
+    .pad-instance {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #pad-list {
+        max-height: 30rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .pad-name {
+        max-width: 30%;
+        overflow: hidden;
+    }
+
+</style>
+
+<body>
+
+    <main id="main-card" class="container rounded mt-5 shadow-sm">
+        <div class="p-3">
+
+            <a href="/" class="logo-container w-100 d-flex mb-4">
+                <img src="/static/img/logo_transparent.png" alt="Logo" style="max-width: 50%; margin: 0 auto;" class="mx-auto">
+            </a>
+
+            <div class="form-group my-4 border-top p-3 border">
+
+                <div class="pad-instance my-2 border-bottom">
+                    <div class="pad-name col-5">
+                        Pad Name
+                    </div>
+                    <div class="pad-last-modified col-5">
+                        Create Date
+                    </div>
+                    <div class="col-2">
+                        Actions
+                    </div>
+                </div>
+
+                <div id="pad-list" >
+                    {{ range $indx, $element := .padList }}
+
+                        <div class="pad-instance my-2">
+                            <div class="pad-name col-5">
+                                <a href="/{{ $element.Name }}">
+                                    {{ $element.Name }}
+                                </a>
+                            </div>
+                            <div class="pad-last-modified col-5">
+                                {{ $element.LastModified }}
+                            </div>
+                            <div class="col-2">
+                                <a href="#" class="btn btn-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+    
+                    {{ end }}
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    {{ template "inc/theme-toggle.html" .}}
+</body>
+
+{{ template "inc/footer.html" .}}
