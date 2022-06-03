@@ -71,8 +71,6 @@ func AdminRoutes(router *gin.RouterGroup) {
 
 		fmt.Println(padList)
 
-		padList[0].LastModified
-
 		ctx.HTML(200, "admin_view.html", gin.H{
 			"title":       "Admin",
 			"padList":     padList,
