@@ -63,6 +63,10 @@ func AdminRoutes(router *gin.RouterGroup) {
 
 	})
 
+	router.GET("/delete/:padname", func(ctx *gin.Context) {
+
+	})
+
 	// Admin view route
 	router.GET("/view", func(ctx *gin.Context) {
 

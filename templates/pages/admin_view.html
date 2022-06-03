@@ -58,9 +58,9 @@
                                 {{ $element.LastModified }}
                             </div>
                             <div class="col-2">
-                                <a href="#" class="btn btn-danger">
+                                <div onclick="doDelete(`{{ $element.Name }}`)" class="btn btn-danger">
                                     Delete
-                                </a>
+                                </div>
                             </div>
                         </div>
     
@@ -74,5 +74,15 @@
 
     {{ template "inc/theme-toggle.html" .}}
 </body>
+
+<script>
+    function doDelete(id) {
+        // Confirm deletion
+        if ( confirm("Confirm pad deletion?") ) {
+            // Do delete
+            window.location.href = `/admin/delete/${id}`;
+        }
+    }
+</script>
 
 {{ template "inc/footer.html" .}}
