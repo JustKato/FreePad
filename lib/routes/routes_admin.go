@@ -7,6 +7,7 @@ import (
 
 	"github.com/JustKato/FreePad/lib/controllers"
 	"github.com/JustKato/FreePad/lib/helper"
+	"github.com/JustKato/FreePad/lib/objects"
 	"github.com/gin-gonic/gin"
 
 	"crypto/sha512"
@@ -44,37 +45,40 @@ func AdminRoutes(router *gin.RouterGroup) {
 			hashHexToken := sha512Hasher.Sum(nil)
 			hashToken := hex.EncodeToString(hashHexToken)
 
-			fmt.Println(hashToken)
-
 			// Set the cookie
 			ctx.SetCookie("admin_token", hashToken, 60*60, "/", helper.GetDomainBase(), true, true)
 
 			ctx.Request.Method = "GET"
 
 			// Redirect the user to the admin page
-			ctx.Redirect(http.StatusTemporaryRedirect, "/admin")
+			ctx.Redirect(http.StatusFound, "/admin/view")
 			return
 		} else {
 			ctx.Request.Method = "GET"
 
 			// Redirect the user to the admin page
-			ctx.Redirect(http.StatusTemporaryRedirect, "/admin/login?fail")
+			ctx.Redirect(http.StatusFound, "/admin/login?fail")
 			return
 		}
 
 	})
 
 	// Admin view route
-	router.GET("/", func(ctx *gin.Context) {
+	router.GET("/view", func(ctx *gin.Context) {
 
-		adminToken, err := ctx.Cookie("admin_token")
-		if err != nil {
-			adminToken = ""
-		}
+		// Get all of the pads as a listing
+		padList := objects.GetAllPosts()
 
-		ctx.JSON(200, gin.H{
-			`adminToken`: adminToken,
+		fmt.Println(padList)
+
+		padList[0].LastModified
+
+		ctx.HTML(200, "admin_view.html", gin.H{
+			"title":       "Admin",
+			"padList":     padList,
+			"domain_base": helper.GetDomainBase(),
 		})
+
 	})
 
 }
