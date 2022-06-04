@@ -26,6 +26,13 @@ type Post struct {
 	Views        uint32 `json:"views"`
 }
 
+func (p *Post) Delete() error {
+	filePath := path.Join(getStorageDirectory(), p.Name)
+
+	// Remove the file and return the result
+	return os.Remove(filePath)
+}
+
 // Get the path to the views JSON
 func getViewsFilePath() (string, error) {
 	// Get the path to the storage then append the const name for the storage file
@@ -94,7 +101,7 @@ func LoadViewsCache() error {
 	return nil
 }
 
-func AddViewToPost(postName string) uint32 {
+func AddViewToPost(postName string, incrementViews bool) uint32 {
 	// Lock the viewers mapping
 	viewersLock.Lock()
 
@@ -104,8 +111,10 @@ func AddViewToPost(postName string) uint32 {
 		ViewsCache[postName] = 0
 	}
 
-	// Add to the counter
-	ViewsCache[postName]++
+	if incrementViews {
+		// Add to the counter
+		ViewsCache[postName]++
+	}
 
 	// Unlock
 	viewersLock.Unlock()
@@ -175,7 +184,7 @@ func getStorageDirectory() string {
 }
 
 // Get a post from the file system
-func GetPost(fileName string) Post {
+func GetPost(fileName string, incrementViews bool) Post {
 	// Get the base storage directory and make sure it exists
 	storageDir := getStorageDirectory()
 
@@ -183,7 +192,7 @@ func GetPost(fileName string) Post {
 	filePath := fmt.Sprintf("%s%s", storageDir, fileName)
 
 	// Get the post views and add 1 to them
-	postViews := AddViewToPost(fileName)
+	postViews := AddViewToPost(fileName, incrementViews)
 
 	p := Post{
 		Name:         fileName,
@@ -294,4 +303,31 @@ func CleanupPosts(age int) {
 		}
 
 	}
+}
+
+func GetAllPosts() []Post {
+	// Initialize the list of posts
+	postList := []Post{}
+
+	// Get the posts storage directory
+	storageDir := getStorageDirectory()
+
+	// Read the directory listing
+	files, err := os.ReadDir(storageDir)
+	// Check if thereh as been an issues with reading the directory contents
+	if err != nil {
+		// Log the error
+		fmt.Println("Error::GetAllPosts:", err)
+		// Return an empty list to have a clean fallback
+		return []Post{}
+	}
+
+	// Go through all of the files
+	for _, v := range files {
+		// Process the file into a pad
+		postList = append(postList, GetPost(v.Name(), false))
+	}
+
+	// Return the post list
+	return postList
 }

@@ -1,0 +1,42 @@
+{{ template "inc/header.html" .}}
+
+<body>
+
+    <main id="main-card" class="container rounded mt-5 shadow-sm">
+        <div class="p-3">
+
+            <a href="/" class="logo-container w-100 d-flex mb-4">
+                <img src="/static/img/logo_transparent.png" alt="Logo" style="max-width: 50%; margin: 0 auto;" class="mx-auto">
+            </a>
+
+            <div class="form-group my-4">
+                <form class="search-action input-group" method="post" action="/admin/login">
+                    <input autocomplete="off" type="password" class="form-control form-control-lg" name="admin-token" placeholder="Your Admin token" aria-label="Your Admin token" aria-describedby="admin-token-button" id="admin-token">
+
+                    <button class="btn btn-primary" type="submit" id="admin-token-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24 " height="24 " fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                        </svg>
+                    </button>
+
+                </form>
+                <small class="text-muted">Access the admin interface for FreePad, this can only be done through the Admin Token.</small>
+            </div>
+        </div>
+
+        <footer class="text-muted py-5 border-top text-center">
+            <p class="mb-1">
+                FreePad by <a href="https://justkato.me/">©Kato Twofold</a>
+            </p>
+            <p class="mb-0">
+                FreePad is freely available over on our <a href="https://github.com/JustKato/FreePad">GitHub</a>
+            </p>
+        </footer>
+
+    </main>
+
+    {{ template "inc/theme-toggle.html" .}}
+</body>
+
+{{ template "inc/footer.html" .}}

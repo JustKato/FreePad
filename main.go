@@ -46,6 +46,9 @@ func main() {
 	// Implement the rate limiter
 	controllers.DoRateLimit(router)
 
+	// Admin Routing
+	routes.AdminRoutes(router.Group("/admin"))
+
 	// Add Routes
 	routes.HomeRoutes(router)
 
