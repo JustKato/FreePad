@@ -7,6 +7,7 @@ import (
 	"github.com/JustKato/FreePad/lib/controllers"
 	"github.com/JustKato/FreePad/lib/objects"
 	"github.com/JustKato/FreePad/lib/routes"
+	"github.com/JustKato/FreePad/lib/socketmanager"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -51,6 +52,9 @@ func main() {
 
 	// Add Routes
 	routes.HomeRoutes(router)
+
+	// Bind the Web Sockets
+	socketmanager.BindSocket(router.Group("/ws"))
 
 	router.Run(":8080")
 
