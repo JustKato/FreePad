@@ -11,10 +11,11 @@ import (
 )
 
 var wsUpgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+	ReadBufferSize:  1024, // TODO: Make it configurable via the .env file
+	WriteBufferSize: 1024, // TODO: Make it configurable via the .env file
 }
 
+// TODO: Use generics so that we can take string messages, that'd be nice!
 type SocketMessage struct {
 	EventType string                 `json:"eventType"`
 	PadName   string                 `json:"padName"`

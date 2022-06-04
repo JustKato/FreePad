@@ -2,6 +2,9 @@ class PadSocket {
 
     ws      = null;
     padName = null;
+    /**
+     * @deprecated
+     */
     state   = null;
 
     /**
@@ -20,6 +23,7 @@ class PadSocket {
         // Connect to the websocket
         const ws = new WebSocket(connUrl);
         ws.onopen = () => {
+            // TODO: This is redundant, we could check the websocket status: ws.readyState == WebSocket.OPEN
             this.state = 'active';
         }
 
@@ -51,6 +55,7 @@ class PadSocket {
             };
         }
 
+        // TODO: Compress the message, usually we will be sending the whole body of the pad from the client to the server or vice-versa.
         this.ws.send( JSON.stringify({
             eventType,
             padName: this.padName,
@@ -65,6 +70,7 @@ class PadSocket {
 
 }
 
+// TODO: Test if this is actually necessary or the DOMContentLoaded event would suffice
 // wait for the whole window to load
 window.addEventListener(`load`, e => {
     window.socket = new PadSocket(padTitle);
