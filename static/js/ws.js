@@ -2,10 +2,6 @@ class PadSocket {
 
     ws      = null;
     padName = null;
-    /**
-     * @deprecated
-     */
-    state   = null;
 
     /**
      * Create a new PadSocket
@@ -22,10 +18,6 @@ class PadSocket {
 
         // Connect to the websocket
         const ws = new WebSocket(connUrl);
-        ws.onopen = () => {
-            // TODO: This is redundant, we could check the websocket status: ws.readyState == WebSocket.OPEN
-            this.state = 'active';
-        }
 
         // Bind the onMessage function
         ws.onmessage = this.handleMessage;
@@ -43,7 +35,7 @@ class PadSocket {
      */
     sendMessage = (eventType, message) => {
 
-        if ( this.state != 'active' ) {
+        if ( this.ws.readyState !== WebSocket.OPEN ) {
             throw new Error(`The websocket connection is not active`);
         }
 
