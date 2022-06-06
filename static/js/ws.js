@@ -51,9 +51,14 @@ class PadSocket {
             updateStatus(`Established`, `text-success`);
         }
 
+        function onFail() {
+            updateStatus(`Connection Failed`, `text-dangerous`);
+            setTimeout( connectSocket , 1000);
+        }
+
         // Try and reconnect on failure
-        ws.onclose = connectSocket;
-        ws.onerror = connectSocket;
+        ws.onclose = onFail;
+        ws.onerror = onFail;
         
         // Assign the websocket
         this.ws = ws;
