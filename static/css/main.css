@@ -49,6 +49,22 @@ main#main-card {
     padding-top: 2rem;
 }
 
+#padTitle {
+    padding: .3rem .75rem !important;
+    border-radius: .25rem;
+    display: inline-block;
+}
+
+.dark #padTitle {
+    color: #db3384;
+    background-color: rgba(0, 0, 0, 0.10);
+}
+
+.light #padTitle {
+    color: #fe79b9;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
 #pad-content-area {
     position: relative;
 
