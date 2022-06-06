@@ -72,6 +72,10 @@ main#main-card {
     flex-flow: column;
 }
 
+.light .edit-content-text {
+    color: white !important;
+}
+
 .edit-content-text {
     display: none;
 }
