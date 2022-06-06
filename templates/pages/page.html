@@ -53,8 +53,7 @@
 
             <pre><code id="textarea-preview" class="form-control hidden">{{.post_content}}</code></pre>
 
-            <textarea maxlength="{{.maximumPadSize}}" name="pad-content" id="pad-content" onchange="sendMyData(this)"
-                onkeydown="updateStatus(`Not Saved`, `text-warning`); toggleWritingWatch(this)"
+            <textarea maxlength="{{.maximumPadSize}}" name="pad-content" id="pad-content" onkeyup="window.socket.sendPadUpdate()"
                 class="form-control hidden">{{.post_content}}</textarea>
         </div>
 
@@ -73,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 col-lg-4 col-xl-4 mt-4 mt-lg-0 mt-xl-0" title="Current Viewers">
+            <div class="col-md-12 col-lg-4 col-xl-4 mt-4 mt-lg-0 mt-xl-0" title="Current Viewers | Total Views">
                 <div class="input-group">
                     <span class="input-group-text">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -86,7 +85,7 @@
                             </path>
                         </svg>
                     </span>
-                    <input type="text" class="form-control" readonly value="{{.views}}">
+                    <input type="text" class="form-control" readonly value="1 | {{.views}}" id="currentViewers">
                 </div>
             </div>
 
