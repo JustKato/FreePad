@@ -40,7 +40,7 @@ class PadSocket {
         }
 
         // Check if the message is a string
-        if ( typeof message == 'string' ) {
+        if ( typeof message !== 'object' ) {
             // Convert the message into a map[string]interface{}
             message = {
                 "message": message,
