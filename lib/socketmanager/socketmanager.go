@@ -40,13 +40,6 @@ func BindSocket(router *gin.RouterGroup) {
 
 func webSocketUpgrade(ctx *gin.Context, padName string) {
 
-	for name, values := range ctx.Request.Header {
-		// Loop over all values for the name.
-		for _, value := range values {
-			fmt.Println(name, value)
-		}
-	}
-
 	conn, err := wsUpgrader.Upgrade(ctx.Writer, ctx.Request, ctx.Request.Header)
 	if err != nil {
 		fmt.Printf("Failed to set websocket upgrade: %v\n", err)
