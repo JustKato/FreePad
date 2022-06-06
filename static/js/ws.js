@@ -164,6 +164,8 @@ class PadSocket {
         this.sendMessage(`padUpdate`, {
             "content": padContents,
         });
+
+        updatePadContent(padContents, false);
     }
 
 }
@@ -172,9 +174,9 @@ class PadSocket {
  * Update the contents of the pad
  * @param {String} newContent 
  */
-function updatePadContent(newContent) {
+function updatePadContent(newContent, textArea = true) {
     // Update the textarea
-    document.getElementById(`pad-content`).value = newContent;
+    if ( textArea ) document.getElementById(`pad-content`).value = newContent;
     // Update the preview
     document.getElementById(`textarea-preview`).innerHTML = newContent;
     // TODO: Re-run the syntax highlight
