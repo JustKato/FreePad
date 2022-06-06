@@ -45,6 +45,24 @@ main#main-card {
     tab-size: 2;
 
     font-family: 'Roboto Mono', monospace !important;
+
+    padding-top: 2rem;
+}
+
+#padTitle {
+    padding: .3rem .75rem !important;
+    border-radius: .25rem;
+    display: inline-block;
+}
+
+.dark #padTitle {
+    color: #db3384;
+    background-color: rgba(0, 0, 0, 0.10);
+}
+
+.light #padTitle {
+    color: #555273;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #pad-content-area {
@@ -54,11 +72,16 @@ main#main-card {
     flex-flow: column;
 }
 
+.light .edit-content-text {
+    color: white !important;
+}
+
 .edit-content-text {
     display: none;
 }
 
 .read-only-content .edit-content-text {
+    margin-top: 1rem;
     display: block !important;
 }
 
@@ -78,6 +101,9 @@ main#main-card {
     max-height: calc(17rem + 30vh);
     min-height: 17rem;
     overflow: auto;
+
+    padding-top: 2rem;
+    margin-top: 1rem;
 }
 
 textarea:focus,
