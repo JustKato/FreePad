@@ -213,6 +213,8 @@ function setTextareaPreview(t = true) {
 
         padContentArea.classList.add(`read-only-content`);
 
+        prev.scrollTop = prev.scrollHeight;
+
         textarea.classList.add(`hidden`);
     } else {
         // Toggle edit mode
