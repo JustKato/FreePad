@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
 
 	"github.com/JustKato/FreePad/lib/objects"
 	"github.com/gin-gonic/gin"
@@ -34,13 +33,14 @@ func BindSocket(router *gin.RouterGroup) {
 		// Get the name of the pad to assign to this socket
 		padName := ctx.Param("pad")
 		// Upgrade the socket connection
-		webSocketUpgrade(ctx.Writer, ctx.Request, padName)
+		webSocketUpgrade(ctx, padName)
 	})
 
 }
 
-func webSocketUpgrade(w http.ResponseWriter, r *http.Request, padName string) {
-	conn, err := wsUpgrader.Upgrade(w, r, nil)
+func webSocketUpgrade(ctx *gin.Context, padName string) {
+
+	conn, err := wsUpgrader.Upgrade(ctx.Writer, ctx.Request, ctx.Request.Header)
 	if err != nil {
 		fmt.Printf("Failed to set websocket upgrade: %v\n", err)
 		return
