@@ -31,8 +31,14 @@ class PadSocket {
 
         // Check if a connection URL was mentioned
         if ( connUrl == null ) {
+
+            let connProtocol = `ws://`;
+            if ( window.location.protocol == `https:` ) {
+                connProtocol = `wss://`;
+            }
+
             // Try and connect to the local websocket
-            connUrl = `ws://` + window.location.host + `/ws/get/${padName}`;
+            connUrl = connProtocol + window.location.host + `/ws/get/${padName}`;
         }
 
         // Connect to the websocket
