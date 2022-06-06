@@ -176,9 +176,21 @@ class PadSocket {
  */
 function updatePadContent(newContent, textArea = true) {
     // Update the textarea
-    if ( textArea ) document.getElementById(`pad-content`).value = newContent;
+    if ( textArea ) {
+        document.getElementById(`pad-content`).value = newContent;
+    }
+    
     // Update the preview
-    document.getElementById(`textarea-preview`).innerHTML = newContent;
+    const prev = document.getElementById(`textarea-preview`);
+    const shouldScroll = prev.scrollTop >= (prev.scrollHeight - Number(getComputedStyle(prev).height.replace(/px/g, ''))) * 0.98;
+
+    prev.innerHTML = newContent;
+
+    // Check if we should follow the bottom scrolling
+    if (shouldScroll) {
+        prev.scrollTop = prev.scrollHeight;
+    }
+
     // TODO: Re-run the syntax highlight
 
 }
