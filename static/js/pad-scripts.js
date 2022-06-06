@@ -138,7 +138,10 @@ function renderArchivesSelection() {
             let resp = confirm("Load contents of pad from memory? This will overwrite the current pad for everyone.");
 
             if (!!resp) {
-                document.getElementById(`pad-content`).value = a.content;
+                // Update visually for the client
+                updatePadContent(a.content);
+                // Send the update
+                window.socket.sendPadUpdate();
             }
         })
 
