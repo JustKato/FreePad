@@ -61,8 +61,8 @@ main#main-card {
 }
 
 .light #padTitle {
-    color: #fe79b9;
-    background-color: rgba(0, 0, 0, 0.15);
+    color: #555273;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #pad-content-area {
