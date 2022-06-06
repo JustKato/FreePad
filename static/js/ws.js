@@ -53,7 +53,6 @@ class PadSocket {
 
         function onFail() {
             updateStatus(`Connection Failed`, `text-dangerous`);
-            setTimeout( connectSocket , 1000);
         }
 
         // Try and reconnect on failure
