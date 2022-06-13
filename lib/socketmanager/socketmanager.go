@@ -40,7 +40,7 @@ func BindSocket(router *gin.RouterGroup) {
 
 func webSocketUpgrade(ctx *gin.Context, padName string) {
 
-	conn, err := wsUpgrader.Upgrade(ctx.Writer, ctx.Request, ctx.Request.Header)
+	conn, err := wsUpgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		fmt.Printf("Failed to set websocket upgrade: %v\n", err)
 		return
