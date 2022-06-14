@@ -19,6 +19,29 @@ The project is absolutely free to use, you can extend the code and even contribu
 
 The current maintainer and creator is `Kato Twofold`
 
+# 🛑 About reverse proxying 🛑
+If you are looking to reverse proxy this program, please keep in mind that the websockets have specific settings regarding reverse proxying, I have tried using `Apache2` but to no luck, if someone could give a suggestion as to how to set up my own program on `Apache2` it'd be amazing.
+On `Nginx` it's rather simple, here is my reverse proxy for the demo at [pad.justkato.me](https://pad.justkato.me/)
+```nginx
+server {
+    # Define the basic information such as server name and log location
+    server_name     pad.justkato.me
+    access_log      logs/pad.justkato.me.access.log main;
+
+    # setup the reverse proxy
+    location / {
+        proxy_pass      http://127.0.0.1:1626;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # WebSocket support !! Important !!
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
 
 ![Gopher](static/img/banner_prerequisites.png)
 
